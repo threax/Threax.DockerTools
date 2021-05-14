@@ -10,7 +10,7 @@ done
 scriptPath="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 buildTarget="$1"
 
-toolsRepo="https://github.com/threax/Threax.Pipelines.git"
+toolsRepo="https://github.com/threax/Threax.DockerTools.git"
 srcDir="$scriptPath/src/Threax.Pipelines"
 if [ -d $srcDir ]
 then
