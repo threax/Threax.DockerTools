@@ -11,7 +11,7 @@ scriptPath="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 buildTarget="$1"
 
 toolsRepo="https://github.com/threax/Threax.DockerTools.git"
-srcDir="$scriptPath/src/Threax.Pipelines"
+srcDir="$scriptPath/src/Threax.DockerTools"
 if [ -d $srcDir ]
 then
     pushd $srcDir

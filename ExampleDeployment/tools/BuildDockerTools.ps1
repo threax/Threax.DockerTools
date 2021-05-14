@@ -1,7 +1,7 @@
 $scriptPath = Split-Path $script:MyInvocation.MyCommand.Path
 
 $toolsRepo = "https://github.com/threax/Threax.DockerTools.git"
-$srcDir = "$scriptPath/src/Threax.Pipelines"
+$srcDir = "$scriptPath/src/Threax.DockerTools"
 if(Test-Path $srcDir) {
     Push-Location $srcDir
     git pull
