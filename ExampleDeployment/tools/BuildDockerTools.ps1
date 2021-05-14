@@ -11,4 +11,4 @@ else {
     git clone $toolsRepo $srcDir
 }
 
-&"$srcDir/Threax.DockerTools/Build.ps1" $scriptPath
+&"$srcDir/Threax.DockerTools/Build.ps1" "$scriptPath/out"
