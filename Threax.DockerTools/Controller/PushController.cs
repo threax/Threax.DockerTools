@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Threax.DockerBuildConfig;
+using Threax.DockerTools.Services;
 using Threax.Pipelines.Core;
-using Threax.Pipelines.Docker;
 
 namespace Threax.DockerTools.Controller
 {

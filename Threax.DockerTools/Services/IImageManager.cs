@@ -1,4 +1,4 @@
-﻿namespace Threax.Pipelines.Docker
+﻿namespace Threax.DockerTools.Services
 {
     public interface IImageManager
     {

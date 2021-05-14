@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Threax.Pipelines.Core;
 
-namespace Threax.Pipelines.Docker
+namespace Threax.DockerTools.Services
 {
     public class ImageManager : IImageManager
     {

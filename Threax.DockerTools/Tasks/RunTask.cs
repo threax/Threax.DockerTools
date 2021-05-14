@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Threax.DeployConfig;
 using Threax.DockerBuildConfig;
+using Threax.DockerTools.Services;
 using Threax.Pipelines.Core;
-using Threax.Pipelines.Docker;
 
 namespace Threax.DockerTools.Tasks
 {

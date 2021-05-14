@@ -53,11 +53,6 @@ namespace Threax.DeployConfig
         public String Name { get; set; }
 
         /// <summary>
-        /// The domain to host the apps on.
-        /// </summary>
-        public String Domain { get; set; } = "dev.threax.com";
-
-        /// <summary>
         /// The user id to run the app as. Default: 10000.
         /// </summary>
         public String User { get; set; } = "10000";
@@ -81,13 +76,6 @@ namespace Threax.DeployConfig
         /// If this is set to a string that command will be run inside an InitContainer before the main container is started.
         /// </summary>
         public String InitCommand { get; set; }
-
-        /// <summary>
-        /// Key vault pairs of secrets to load for the init environment.
-        /// The key should be in in dot format and the value the name of the secret.
-        /// e.g. "AppConfig.ConnectionString": "secret-name"
-        /// </summary>
-        public Dictionary<String, String> InitSecrets { get; set; }
 
         /// <summary>
         /// A map of volume mounts.
@@ -125,11 +113,6 @@ namespace Threax.DeployConfig
         public List<String> Ports { get; set; }
 
         /// <summary>
-        /// The name of the pod info json file to generate. Default: pod.json.
-        /// </summary>
-        public String PodJsonFile { get; set; } = "pod.json";
-
-        /// <summary>
         /// Set this to true to auto mount the app settings config. Default: true.
         /// </summary>
         public bool AutoMountAppSettings { get; set; } = true;
@@ -138,11 +121,6 @@ namespace Threax.DeployConfig
         /// The mount path for the appsettings file. Default: /app/appsettings.Production.json.
         /// </summary>
         public String AppSettingsMountPath { get; set; } = "/app/appsettings.Production.json";
-
-        /// <summary>
-        /// The sub path for the appsettings file. Default: appsettings.Production.json.
-        /// </summary>
-        public String AppSettingsSubPath { get; set; } = "appsettings.Production.json";
 
         /// <summary>
         /// Set this to the name of an image to force that image to be used instead of a discovered image from the local system.

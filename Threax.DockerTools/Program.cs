@@ -6,6 +6,7 @@ using Threax.ConsoleApp;
 using Threax.DeployConfig;
 using Threax.DockerBuildConfig;
 using Threax.DockerTools.Controller;
+using Threax.DockerTools.Services;
 using Threax.DockerTools.Tasks;
 using Threax.Extensions.Configuration.SchemaBinder;
 using Threax.Pipelines.Core;
@@ -40,7 +41,6 @@ namespace Threax.DockerTools
                 {
                     o.SetupConfigFileProvider = s => new ConfigFileProvider(jsonConfigPath);
                 });
-                services.AddThreaxPipelinesDocker();
 
                 services.AddScoped<BuildConfig>(s =>
                 {
@@ -70,6 +70,7 @@ namespace Threax.DockerTools
                 services.AddScoped<ILoadTask, LoadTask>();
                 services.AddScoped<IRunTask, RunTask>();
                 services.AddScoped<IStopContainerTask, StopContainerTask>();
+                services.AddScoped<IImageManager, ImageManager>();
             })
             .Run(c => c.Run());
         }
