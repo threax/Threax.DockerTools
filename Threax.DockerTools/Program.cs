@@ -62,7 +62,24 @@ namespace Threax.DockerTools
 
                 services.AddLogging(o =>
                 {
-                    o.AddConsole();
+                    o.AddConsole().AddSimpleConsole(co =>
+                    {
+                        co.IncludeScopes = false;
+                        co.SingleLine = true;
+                    });
+                });
+
+                services.AddThreaxPwshShellRunner(o =>
+                {
+                    //o.IncludeLogOutput = false;
+                    //o.DecorateProcessRunner = r => new SpyProcessRunner(r)
+                    //{
+                    //    Events = new ProcessEvents()
+                    //    {
+                    //        ErrorDataReceived = (o, e) => { if (e.DataReceivedEventArgs.Data != null) Console.WriteLine(e.DataReceivedEventArgs.Data); },
+                    //        OutputDataReceived = (o, e) => { if (e.DataReceivedEventArgs.Data != null) Console.WriteLine(e.DataReceivedEventArgs.Data); },
+                    //    }
+                    //};
                 });
 
                 services.AddScoped<ICreateBase64SecretTask, CreateBase64SecretTask>();

@@ -19,6 +19,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
     <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder" Version="2.0.1" />
     <PackageReference Include="Threax.ConsoleApp" Version="1.0.0" />
+    <PackageReference Include="Threax.ProcessHelper" Version="1.0.0-pre25" />
+    <PackageReference Include="Threax.ProcessHelper.Pwsh" Version="1.0.0-pre25" />
   </ItemGroup>
 
   <ItemGroup>
