@@ -5,95 +5,95 @@
     },
     "Clone Id": {
       "commandName": "Project",
-      "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json"
+      "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
     "Build Id": {
       "commandName": "Project",
-      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json"
+      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
     "Push Id": {
       "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json"
+      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
     "Run Id": {
       "commandName": "Project",
-      "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json"
+      "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
     "Backup Id": {
       "commandName": "Project",
-      "commandLineArgs": "backup $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json"
+      "commandLineArgs": "backup $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
     "Backup Id norestart": {
       "commandName": "Project",
-      "commandLineArgs": "backup $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json norestart"
+      "commandLineArgs": "backup $(ProjectDir)../ExampleDeployment/id/appsettings.json norestart"
     },
     "Restore Id": {
       "commandName": "Project",
-      "commandLineArgs": "restore $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json"
+      "commandLineArgs": "restore $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
     "Restore Id norestart": {
       "commandName": "Project",
-      "commandLineArgs": "restore $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json norestart"
+      "commandLineArgs": "restore $(ProjectDir)../ExampleDeployment/id/appsettings.json norestart"
     },
     "Clone AppDashboard": {
       "commandName": "Project",
-      "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/Local/appdashboard/appsettings.json"
+      "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/appdashboard/appsettings.json"
     },
     "Build AppDashboard": {
       "commandName": "Project",
-      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/Local/appdashboard/appsettings.json"
+      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/appdashboard/appsettings.json"
     },
     "Push AppDashboard": {
       "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/Local/appdashboard/appsettings.json"
+      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/appdashboard/appsettings.json"
     },
     "Clone AppTemplate": {
       "commandName": "Project",
-      "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json"
+      "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
     },
     "Build AppTemplate": {
       "commandName": "Project",
-      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json"
+      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
     },
     "Push AppTemplate": {
       "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json"
+      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
     },
     "Run AppTemplate": {
       "commandName": "Project",
-      "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json"
+      "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
     },
     "Exec AppTemplate AddAdmin": {
       "commandName": "Project",
-      "commandLineArgs": "exec $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json AddAdmin a5dcd5a3-abef-4814-9f5c-78c3d36b7130"
+      "commandLineArgs": "exec $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json AddAdmin a5dcd5a3-abef-4814-9f5c-78c3d36b7130"
     },
     "Build Nginx": {
       "commandName": "Project",
-      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/Local/nginx/appsettings.json"
+      "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/nginx/appsettings.json"
     },
     "Push Nginx": {
       "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/Local/nginx/appsettings.json"
+      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/nginx/appsettings.json"
     },
     "Run Nginx": {
       "commandName": "Project",
-      "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/Local/nginx/appsettings.json"
+      "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/nginx/appsettings.json"
     },
     "Set Nginx Public Key": {
       "commandName": "Project",
-      "commandLineArgs": "setsecret $(ProjectDir)../ExampleDeployment/Local/nginx/appsettings.json public-key C:/Development/K8sCluster/files/cert/fullchain1.pem"
+      "commandLineArgs": "setsecret $(ProjectDir)../ExampleDeployment/nginx/appsettings.json public-key C:/Development/K8sCluster/files/cert/fullchain1.pem"
     },
     "Set Nginx Private Key": {
       "commandName": "Project",
-      "commandLineArgs": "setsecret $(ProjectDir)../ExampleDeployment/Local/nginx/appsettings.json private-key C:/Development/K8sCluster/files/cert/privkey1.pem"
+      "commandLineArgs": "setsecret $(ProjectDir)../ExampleDeployment/nginx/appsettings.json private-key C:/Development/K8sCluster/files/cert/privkey1.pem"
     },
     "Setup App Dashboard (Run id first)": {
       "commandName": "Project",
-      "commandLineArgs": "exec $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json SetupAppDashboard --exec-load secret appdashboard/JwtAuth__ClientSecret $(ProjectDir)../ExampleDeployment/Local/appdashboard/appsettings.json JwtAuth__ClientSecret"
+      "commandLineArgs": "exec $(ProjectDir)../ExampleDeployment/id/appsettings.json SetupAppDashboard --exec-load secret appdashboard/JwtAuth__ClientSecret $(ProjectDir)../ExampleDeployment/appdashboard/appsettings.json JwtAuth__ClientSecret"
     },
     "Setup AppTemplate (Run id and apptemplate first)": {
       "commandName": "Project",
-      "commandLineArgs": "exec $(ProjectDir)../ExampleDeployment/Local/id/appsettings.json AddFromMetadata \"https://apptemplate.dev.threax.com\" --exec-load secret apptemplate/JwtAuth__ClientSecret $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json JwtAuth__ClientSecret --exec-load secret apptemplate/SharedClientCredentials__ClientSecret $(ProjectDir)../ExampleDeployment/Local/apptemplate/appsettings.json SharedClientCredentials__ClientSecret"
+      "commandLineArgs": "exec $(ProjectDir)../ExampleDeployment/id/appsettings.json AddFromMetadata \"https://apptemplate.dev.threax.com\" --exec-load secret apptemplate/JwtAuth__ClientSecret $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json JwtAuth__ClientSecret --exec-load secret apptemplate/SharedClientCredentials__ClientSecret $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json SharedClientCredentials__ClientSecret"
     }
   }
 }
