@@ -10,7 +10,7 @@ It works by placing appsettings.json files on the server to create a root app di
 These folders will be scoped to only be accessible by the user id specified for the app.
 
 ## Building
-Run Publish.ps1 to create a build for Ubuntu.
+Run Build.ps1 or Build.sh to create a build for Ubuntu.
 
 ## Clone
 Clone a repo by running:
