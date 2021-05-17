@@ -1,3 +1,8 @@
 cert
 certbot
 tools/bin
+/**/src
+/**/data
+/**/secrets
+/**/pod.json
+/**/*tar.gz

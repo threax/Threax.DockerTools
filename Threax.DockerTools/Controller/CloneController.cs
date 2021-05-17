@@ -1,40 +1,31 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Threax.DockerBuildConfig;
-using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Controller
 {
-    class CloneController : IController
+    record CloneController
+    (
+        BuildConfig appConfig,
+        ILogger<CloneController> logger,
+        IProcessRunnerFactory processRunnerFactory
+    ) : IController
     {
-        private BuildConfig appConfig;
-        private ILogger logger;
-        private readonly IProcessRunner processRunner;
-
-        public CloneController(BuildConfig appConfig, ILogger<CloneController> logger, IProcessRunner processRunner)
-        {
-            this.appConfig = appConfig;
-            this.logger = logger;
-            this.processRunner = processRunner;
-        }
-
         public Task Run()
         {
             var clonePath = Path.GetFullPath(appConfig.ClonePath);
             var repo = appConfig.RepoUrl;
+            var processRunner = processRunnerFactory.Create();
 
             if (Directory.Exists(appConfig.ClonePath))
             {
                 logger.LogInformation($"Pulling changes to {clonePath}");
-                var exitCode = processRunner.RunProcessWithOutput(new System.Diagnostics.ProcessStartInfo("git", "pull")
-                {
-                    WorkingDirectory = Path.GetFullPath(appConfig.ClonePath)
-                });
+                var startInfo = new ProcessStartInfo("git") { ArgumentList = { "pull" }, WorkingDirectory = Path.GetFullPath(appConfig.ClonePath) };
+                var exitCode = processRunner.Run(startInfo);
                 if (exitCode != 0)
                 {
                     throw new InvalidOperationException("Error during pull.");
@@ -43,8 +34,9 @@ namespace Threax.DockerTools.Controller
             else
             {
                 logger.LogInformation($"Cloning {repo} to {clonePath}");
-                var exitCode = processRunner.RunProcessWithOutput(new System.Diagnostics.ProcessStartInfo("git", $"clone \"{repo}\" \"{clonePath}\""));
-                if(exitCode != 0)
+                var startInfo = new ProcessStartInfo("git") { ArgumentList = { "clone", repo, clonePath } };
+                var exitCode = processRunner.Run(startInfo);
+                if (exitCode != 0)
                 {
                     throw new InvalidOperationException("Error during clone.");
                 }

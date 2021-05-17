@@ -338,8 +338,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/ExampleDeployment/**/src
-/ExampleDeployment/**/data
-/ExampleDeployment/**/secrets
-/ExampleDeployment/**/pod.json
-/ExampleDeployment/Local/**/*tar.gz
