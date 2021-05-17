@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Tasks
 {
-    class StopContainerTask : IStopContainerTask
+    record StopContainerTask
+    (
+        IProcessRunnerFactory processRunnerFactory
+    ) 
+    : IStopContainerTask
     {
-        private readonly IProcessRunner processRunner;
-
-        public StopContainerTask(
-            IProcessRunner processRunner)
-        {
-            this.processRunner = processRunner;
-        }
-
         public void StopContainer(String name)
         {
+            var processRunner = processRunnerFactory.Create();
             //It is ok if this fails, probably means it wasn't running
-            processRunner.RunProcessWithOutput(new ProcessStartInfo("docker", $"rm {name} --force"));
+            processRunner.Run(new ProcessStartInfo("docker") { ArgumentList = { "rm", name, "--force" } });
         }
     }
 }

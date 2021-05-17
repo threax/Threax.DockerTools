@@ -9,6 +9,7 @@ using Threax.DeployConfig;
 using Threax.DockerBuildConfig;
 using Threax.DockerTools.Services;
 using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Tasks
 {
@@ -17,7 +18,7 @@ namespace Threax.DockerTools.Tasks
         private BuildConfig buildConfig;
         private readonly DeploymentConfig deploymentConfig;
         private ILogger logger;
-        private IProcessRunner processRunner;
+        private IProcessRunnerFactory processRunnerFactory;
         private readonly IImageManager imageManager;
         private readonly IOSHandler osHandler;
         private readonly IConfigFileProvider configFileProvider;
@@ -29,7 +30,7 @@ namespace Threax.DockerTools.Tasks
             BuildConfig buildConfig,
             DeploymentConfig deploymentConfig,
             ILogger<RunTask> logger,
-            IProcessRunner processRunner,
+            IProcessRunnerFactory processRunnerFactory,
             IImageManager imageManager,
             IOSHandler osHandler,
             IConfigFileProvider configFileProvider,
@@ -40,7 +41,7 @@ namespace Threax.DockerTools.Tasks
             this.buildConfig = buildConfig;
             this.deploymentConfig = deploymentConfig;
             this.logger = logger;
-            this.processRunner = processRunner;
+            this.processRunnerFactory = processRunnerFactory;
             this.imageManager = imageManager;
             this.osHandler = osHandler;
             this.configFileProvider = configFileProvider;
@@ -51,13 +52,14 @@ namespace Threax.DockerTools.Tasks
 
         public Task Run()
         {
+            var processRunner = processRunnerFactory.Create();
             int exitCode;
             String taggedImageName;
 
             if (!String.IsNullOrEmpty(deploymentConfig.ImageName))
             {
                 taggedImageName = deploymentConfig.ImageName;
-                exitCode = processRunner.RunProcessWithOutput(new ProcessStartInfo("docker", $"pull {taggedImageName}"));
+                exitCode = processRunner.Run(new ProcessStartInfo("docker") { ArgumentList = { "pull", taggedImageName } });
                 if (exitCode != 0)
                 {
                     throw new InvalidOperationException("An error occured during the docker pull.");
@@ -215,16 +217,16 @@ namespace Threax.DockerTools.Tasks
 
                 var initArgs = $"run --rm --entrypoint {entryPoint} {args}{cmd}";
                 logger.LogInformation(initArgs);
-                exitCode = processRunner.RunProcessWithOutput(new ProcessStartInfo("docker", initArgs));
+                exitCode = processRunner.Run(new ProcessStartInfo("docker", initArgs)); //TODO: Not safe
                 if (exitCode != 0)
                 {
                     throw new InvalidOperationException("An error occured during docker run.");
                 }
             }
 
-            var runArgs = $"run -d --restart unless-stopped {args.ToString()}";
+            var runArgs = $"run -d --restart unless-stopped {args.ToString()}"; //TODO: Not safe
             logger.LogInformation(runArgs);
-            exitCode = processRunner.RunProcessWithOutput(new ProcessStartInfo("docker", runArgs));
+            exitCode = processRunner.Run(new ProcessStartInfo("docker", runArgs));
             if (exitCode != 0)
             {
                 throw new InvalidOperationException("An error occured during docker run.");

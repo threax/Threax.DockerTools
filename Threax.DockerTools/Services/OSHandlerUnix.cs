@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Threax.ProcessHelper;
 
 namespace Threax.Pipelines.Core
 {
@@ -23,14 +24,13 @@ namespace Threax.Pipelines.Core
             //sudo chown -R 19999:19999 /data/app/id
             //sudo chmod 700 /data/app/id
 
-            //Dunno if this will work
             int exitCode;
-            exitCode = this.processRunner.RunProcessWithOutput(new System.Diagnostics.ProcessStartInfo("chown", $"-R {user}:{group} {path}"));
+            exitCode = this.processRunner.Run(new System.Diagnostics.ProcessStartInfo("chown") { ArgumentList = { "-R", $"{user}:{group}", path } });
             if (exitCode != 0)
             {
                 throw new InvalidOperationException("An error occured during the chown.");
             }
-            exitCode = this.processRunner.RunProcessWithOutput(new System.Diagnostics.ProcessStartInfo("chmod", $"-R 700 {path}"));
+            exitCode = this.processRunner.Run(new System.Diagnostics.ProcessStartInfo("chmod") { ArgumentList = { "-R", "700", path } });
             if (exitCode != 0)
             {
                 throw new InvalidOperationException("An error occured during the chmod.");

@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.DockerBuildConfig", "Threax.DockerBuildConfig\Threax.DockerBuildConfig.csproj", "{A88C78F1-F01E-4DD4-949E-5D9F9704A16C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.Pipelines.Core", "Threax.Pipelines.Core\Threax.Pipelines.Core.csproj", "{168F3CFF-BA1A-4A68-8C8D-DFD38332B7BC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.DeployConfig", "Threax.DeployConfig\Threax.DeployConfig.csproj", "{DAAB2216-B780-4620-9B73-C2AF3DE45C7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.DockerTools", "Threax.DockerTools\Threax.DockerTools.csproj", "{6BBECCD8-840A-4FAD-BD1C-6122B0DB508B}"
@@ -26,10 +24,6 @@ Global
 		{A88C78F1-F01E-4DD4-949E-5D9F9704A16C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A88C78F1-F01E-4DD4-949E-5D9F9704A16C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A88C78F1-F01E-4DD4-949E-5D9F9704A16C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{168F3CFF-BA1A-4A68-8C8D-DFD38332B7BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{168F3CFF-BA1A-4A68-8C8D-DFD38332B7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{168F3CFF-BA1A-4A68-8C8D-DFD38332B7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{168F3CFF-BA1A-4A68-8C8D-DFD38332B7BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAAB2216-B780-4620-9B73-C2AF3DE45C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAAB2216-B780-4620-9B73-C2AF3DE45C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAAB2216-B780-4620-9B73-C2AF3DE45C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -14,24 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var options = new ThreaxPipelineCoreOptions();
             configure?.Invoke(options);
 
-            services.AddScoped<IProcessRunner, ProcessRunner>();
-            services.AddScoped<IConfigFileProvider>(s =>
-            {
-                if(options.SetupConfigFileProvider == null)
-                {
-                    throw new InvalidOperationException($"You must provide {nameof(ThreaxPipelineCoreOptions.SetupConfigFileProvider)} to use the IConfigFileProvider.");
-                }
-                return options.SetupConfigFileProvider.Invoke(s);
-            });
-
-            services.AddScoped<IOSHandler>(s =>
-            {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    return new OSHandlerWindows();
-                }
-                return new OSHandlerUnix(s.GetRequiredService<IProcessRunner>());
-            });
+            
         }
     }
 }

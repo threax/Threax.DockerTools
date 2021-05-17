@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Threax.ConsoleApp;
 using Threax.DeployConfig;
@@ -10,6 +11,7 @@ using Threax.DockerTools.Services;
 using Threax.DockerTools.Tasks;
 using Threax.Extensions.Configuration.SchemaBinder;
 using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools
 {
@@ -37,9 +39,15 @@ namespace Threax.DockerTools
                     return new SchemaConfigurationBinder(configBuilder.Build());
                 });
 
-                services.AddThreaxPipelines(o =>
+                services.AddScoped<IConfigFileProvider>(s => new ConfigFileProvider(jsonConfigPath));
+
+                services.AddScoped<IOSHandler>(s =>
                 {
-                    o.SetupConfigFileProvider = s => new ConfigFileProvider(jsonConfigPath);
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        return new OSHandlerWindows();
+                    }
+                    return new OSHandlerUnix(s.GetRequiredService<IProcessRunner>());
                 });
 
                 services.AddScoped<BuildConfig>(s =>
