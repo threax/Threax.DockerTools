@@ -9,13 +9,13 @@ namespace Threax.DockerTools.Services
 {
     record ImageManager
     (
-        IProcessRunnerFactory processRunnerFactory
+        IProcessRunner processRunner
     )
     : IImageManager
     {
         public string FindLatestImage(string image, string baseTag, string currentTag)
         {
-            var processRunner = new JsonOutputProcessRunner(processRunnerFactory.Create(), true);
+            var processRunner = new JsonOutputProcessRunner(this.processRunner, true);
 
             //Get the tags from docker
             var startInfo = new ProcessStartInfo("docker") { ArgumentList = { "inspect", "--format={{json .RepoTags}}", $"{image}:{currentTag}" } };

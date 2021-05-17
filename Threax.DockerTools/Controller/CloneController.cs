@@ -12,14 +12,13 @@ namespace Threax.DockerTools.Controller
     (
         BuildConfig appConfig,
         ILogger<CloneController> logger,
-        IProcessRunnerFactory processRunnerFactory
+        IProcessRunner processRunner
     ) : IController
     {
         public Task Run()
         {
             var clonePath = Path.GetFullPath(appConfig.ClonePath);
             var repo = appConfig.RepoUrl;
-            var processRunner = processRunnerFactory.Create();
 
             if (Directory.Exists(appConfig.ClonePath))
             {

@@ -9,13 +9,12 @@ namespace Threax.DockerTools.Tasks
 {
     record StopContainerTask
     (
-        IProcessRunnerFactory processRunnerFactory
+        IProcessRunner processRunner
     ) 
     : IStopContainerTask
     {
         public void StopContainer(String name)
         {
-            var processRunner = processRunnerFactory.Create();
             //It is ok if this fails, probably means it wasn't running
             processRunner.Run(new ProcessStartInfo("docker") { ArgumentList = { "rm", name, "--force" } });
         }

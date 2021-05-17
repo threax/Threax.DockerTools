@@ -77,7 +77,7 @@ namespace Threax.DockerTools
                     });
                 });
 
-                services.AddThreaxPwshShellRunner(o =>
+                services.AddThreaxProcessHelper(o =>
                 {
                     //o.IncludeLogOutput = false;
                     //o.DecorateProcessRunner = r => new SpyProcessRunner(r)

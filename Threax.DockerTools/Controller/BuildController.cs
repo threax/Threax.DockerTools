@@ -12,8 +12,7 @@ namespace Threax.DockerTools.Controller
     (
         BuildConfig buildConfig, 
         ILogger<BuildController> logger, 
-        IShellRunner shellRunner,
-        IProcessRunnerFactory processRunnerFactory
+        IProcessRunner processRunner
     ) 
     : IController
     {
@@ -51,7 +50,6 @@ namespace Threax.DockerTools.Controller
                 }
             }
 
-            var processRunner = processRunnerFactory.Create();
             processRunner.Run(processStartInfo);
 
             return Task.CompletedTask;

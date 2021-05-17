@@ -18,7 +18,7 @@ namespace Threax.DockerTools.Tasks
         private BuildConfig buildConfig;
         private readonly DeploymentConfig deploymentConfig;
         private ILogger logger;
-        private IProcessRunnerFactory processRunnerFactory;
+        private IProcessRunner processRunner;
         private readonly IImageManager imageManager;
         private readonly IOSHandler osHandler;
         private readonly IConfigFileProvider configFileProvider;
@@ -30,7 +30,7 @@ namespace Threax.DockerTools.Tasks
             BuildConfig buildConfig,
             DeploymentConfig deploymentConfig,
             ILogger<RunTask> logger,
-            IProcessRunnerFactory processRunnerFactory,
+            IProcessRunner processRunner,
             IImageManager imageManager,
             IOSHandler osHandler,
             IConfigFileProvider configFileProvider,
@@ -41,7 +41,7 @@ namespace Threax.DockerTools.Tasks
             this.buildConfig = buildConfig;
             this.deploymentConfig = deploymentConfig;
             this.logger = logger;
-            this.processRunnerFactory = processRunnerFactory;
+            this.processRunner = processRunner;
             this.imageManager = imageManager;
             this.osHandler = osHandler;
             this.configFileProvider = configFileProvider;
@@ -52,7 +52,6 @@ namespace Threax.DockerTools.Tasks
 
         public Task Run()
         {
-            var processRunner = processRunnerFactory.Create();
             int exitCode;
             String taggedImageName;
 

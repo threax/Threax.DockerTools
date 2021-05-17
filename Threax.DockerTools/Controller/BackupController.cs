@@ -15,7 +15,7 @@ namespace Threax.DockerTools.Controller
     (
         DeploymentConfig deploymentConfig,
         ILogger<RunController> logger,
-        IProcessRunnerFactory processRunnerFactory,
+        IProcessRunner processRunner,
         IRunTask runTask,
         IArgsProvider argsProvider,
         IStopContainerTask stopContainerTask
@@ -28,7 +28,6 @@ namespace Threax.DockerTools.Controller
             int exitCode;
             var args = argsProvider.Args;
             var restart = !args.Contains("norestart");
-            var processRunner = processRunnerFactory.Create();
 
             try
             {

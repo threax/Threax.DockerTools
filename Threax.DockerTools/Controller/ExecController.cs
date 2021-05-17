@@ -16,7 +16,7 @@ namespace Threax.DockerTools.Controller
         BuildConfig buildConfig,
         DeploymentConfig deploymentConfig,
         IArgsProvider argsProvider,
-        IProcessRunnerFactory processRunnerFactory,
+        IProcessRunner processRunner,
         ILogger<ExecController> logger,
         ILoadTask loadTask
     )
@@ -82,7 +82,6 @@ namespace Threax.DockerTools.Controller
 
                 logger.LogInformation($"Running command '{commandName}' on container '{containerName}'.");
 
-                var processRunner = processRunnerFactory.Create();
                 var exitCode = processRunner.Run(new System.Diagnostics.ProcessStartInfo("docker", execArgs));
                 if (exitCode != 0)
                 {
