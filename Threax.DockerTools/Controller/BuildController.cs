@@ -27,7 +27,6 @@ namespace Threax.DockerTools.Controller
 
             var processStartInfo = new ProcessStartInfo("docker")
             {
-                UseShellExecute = false,
                 ArgumentList =
                 {
                     "build", context,

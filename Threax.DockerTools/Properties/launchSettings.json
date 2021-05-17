@@ -11,10 +11,6 @@
       "commandName": "Project",
       "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/id/appsettings.json"
     },
-    "Push Id": {
-      "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/id/appsettings.json"
-    },
     "Run Id": {
       "commandName": "Project",
       "commandLineArgs": "run $(ProjectDir)../ExampleDeployment/id/appsettings.json"
@@ -43,10 +39,6 @@
       "commandName": "Project",
       "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/appdashboard/appsettings.json"
     },
-    "Push AppDashboard": {
-      "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/appdashboard/appsettings.json"
-    },
     "Clone AppTemplate": {
       "commandName": "Project",
       "commandLineArgs": "clone $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
@@ -54,10 +46,6 @@
     "Build AppTemplate": {
       "commandName": "Project",
       "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
-    },
-    "Push AppTemplate": {
-      "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/apptemplate/appsettings.json"
     },
     "Run AppTemplate": {
       "commandName": "Project",
@@ -70,10 +58,6 @@
     "Build Nginx": {
       "commandName": "Project",
       "commandLineArgs": "build $(ProjectDir)../ExampleDeployment/nginx/appsettings.json"
-    },
-    "Push Nginx": {
-      "commandName": "Project",
-      "commandLineArgs": "push $(ProjectDir)../ExampleDeployment/nginx/appsettings.json"
     },
     "Run Nginx": {
       "commandName": "Project",

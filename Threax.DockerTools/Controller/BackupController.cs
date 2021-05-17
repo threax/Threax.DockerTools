@@ -64,7 +64,7 @@ namespace Threax.DockerTools.Controller
                 logger.LogInformation($"Backing up data folder '{fullDataPath}' to '{backupPath}'");
                 stopContainerTask.StopContainer(deploymentConfig.Name);
 
-                var startInfo = new ProcessStartInfo("tar") { ArgumentList = { "cvpzf", backupPath, dataFolder }, WorkingDirectory = dataParentPath, UseShellExecute = false };
+                var startInfo = new ProcessStartInfo("tar") { ArgumentList = { "cvpzf", backupPath, dataFolder }, WorkingDirectory = dataParentPath };
                 exitCode = processRunner.Run(startInfo);
 
                 if (exitCode != 0)

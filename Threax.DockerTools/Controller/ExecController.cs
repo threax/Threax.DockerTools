@@ -2,44 +2,31 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Threax.ConsoleApp;
 using Threax.DeployConfig;
 using Threax.DockerBuildConfig;
 using Threax.DockerTools.Tasks;
-using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Controller
 {
-    class ExecController : IController
+    record ExecController
+    (
+        BuildConfig buildConfig,
+        DeploymentConfig deploymentConfig,
+        IArgsProvider argsProvider,
+        IProcessRunnerFactory processRunnerFactory,
+        ILogger<ExecController> logger,
+        ILoadTask loadTask
+    )
+    : IController
     {
-        private readonly BuildConfig buildConfig;
-        private readonly DeploymentConfig deploymentConfig;
-        private readonly IArgsProvider argsProvider;
-        private readonly IProcessRunner processRunner;
-        private readonly ILogger<ExecController> logger;
-        private readonly ILoadTask loadTask;
-
-        public ExecController(
-            BuildConfig buildConfig,
-            DeploymentConfig deploymentConfig,
-            IArgsProvider argsProvider,
-            IProcessRunner processRunner,
-            ILogger<ExecController> logger,
-            ILoadTask loadTask)
-        {
-            this.buildConfig = buildConfig;
-            this.deploymentConfig = deploymentConfig;
-            this.argsProvider = argsProvider;
-            this.processRunner = processRunner;
-            this.logger = logger;
-            this.loadTask = loadTask;
-        }
-
         public async Task Run()
         {
+            //TODO: This controller is not really safe. Shell commands could be injected here since the formatted strings are not passed as arguments.
+            //In practice this is ok, but this is a potential source of issues.
+
             var filesToRemove = new List<String>();
             try
             {
@@ -95,7 +82,8 @@ namespace Threax.DockerTools.Controller
 
                 logger.LogInformation($"Running command '{commandName}' on container '{containerName}'.");
 
-                var exitCode = processRunner.RunProcessWithOutput(new System.Diagnostics.ProcessStartInfo("docker", execArgs));
+                var processRunner = processRunnerFactory.Create();
+                var exitCode = processRunner.Run(new System.Diagnostics.ProcessStartInfo("docker", execArgs));
                 if (exitCode != 0)
                 {
                     throw new InvalidOperationException($"An error occured running the command '{commandName}' on '{containerName}'");
