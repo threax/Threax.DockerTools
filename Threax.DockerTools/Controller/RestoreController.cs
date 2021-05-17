@@ -7,40 +7,27 @@ using System.Threading.Tasks;
 using Threax.ConsoleApp;
 using Threax.DeployConfig;
 using Threax.DockerTools.Tasks;
-using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Controller
 {
-    class RestoreController : IController
+    record RestoreController
+    (
+        DeploymentConfig deploymentConfig,
+        ILogger<RunController> logger,
+        IProcessRunnerFactory processRunnerFactory,
+        IRunTask runTask,
+        IArgsProvider argsProvider,
+        IStopContainerTask stopContainerTask
+    )
+    : IController
     {
-        private readonly DeploymentConfig deploymentConfig;
-        private ILogger logger;
-        private IProcessRunner processRunner;
-        private readonly IRunTask runTask;
-        private readonly IArgsProvider argsProvider;
-        private readonly IStopContainerTask stopContainerTask;
-
-        public RestoreController(
-            DeploymentConfig deploymentConfig,
-            ILogger<RunController> logger,
-            IProcessRunner processRunner,
-            IRunTask runTask,
-            IArgsProvider argsProvider,
-            IStopContainerTask stopContainerTask)
-        {
-            this.deploymentConfig = deploymentConfig;
-            this.logger = logger;
-            this.processRunner = processRunner;
-            this.runTask = runTask;
-            this.argsProvider = argsProvider;
-            this.stopContainerTask = stopContainerTask;
-        }
-
         public Task Run()
         {
             int exitCode;
             var args = argsProvider.Args;
             var restart = !args.Contains("norestart");
+            var processRunner = processRunnerFactory.Create();
 
             try
             {
@@ -65,7 +52,7 @@ namespace Threax.DockerTools.Controller
                     .OrderByDescending(i => i)
                     .FirstOrDefault();
 
-                if(backupPath == null)
+                if (backupPath == null)
                 {
                     throw new InvalidOperationException($"Cannot find any backup files of the pattern '{backupSearch}' in search directory '{backupSearchPath}'.");
                 }
@@ -90,10 +77,8 @@ namespace Threax.DockerTools.Controller
                     Directory.CreateDirectory(destParent);
                 }
 
-                exitCode = processRunner.RunProcessWithOutput(new ProcessStartInfo("tar", $"xpvzf {backupPath}")
-                {
-                    WorkingDirectory = destParent
-                });
+                var startInfo = new ProcessStartInfo("tar") { ArgumentList = { "xpvzf", backupPath }, WorkingDirectory = destParent };
+                exitCode = processRunner.Run(startInfo);
 
                 if (exitCode != 0)
                 {
