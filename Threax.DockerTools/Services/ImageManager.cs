@@ -3,26 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Services
 {
-    public class ImageManager : IImageManager
+    record ImageManager
+    (
+        IProcessRunnerFactory processRunnerFactory
+    )
+    : IImageManager
     {
-        private readonly IProcessRunner processRunner;
-
-        public ImageManager(IProcessRunner processRunner)
-        {
-            this.processRunner = processRunner;
-        }
-
         public string FindLatestImage(string image, string baseTag, string currentTag)
         {
+            var processRunner = new JsonOutputProcessRunner(processRunnerFactory.Create(), true);
+
             //Get the tags from docker
-            var args = $"inspect --format=\"{{{{json .RepoTags}}}}\" {image}:{currentTag}";
-            var startInfo = new ProcessStartInfo("docker", args);
-            var json = processRunner.RunProcessWithOutputGetOutput(startInfo);
-            var tags = JsonConvert.DeserializeObject<List<String>>(json);
+            var startInfo = new ProcessStartInfo("docker") { ArgumentList = { "inspect", "--format={{json .RepoTags}}", $"{image}:{currentTag}" } };
+            processRunner.Run(startInfo);
+            var tags = processRunner.GetResult<List<String>>($"Error inspecting image '{image}'");
 
             //Remove any tags that weren't set by this software
             tags.Remove($"{image}:{currentTag}");
