@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Threax.DockerBuildConfig;
-using Threax.Pipelines.Core;
 using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Controller
@@ -15,7 +12,8 @@ namespace Threax.DockerTools.Controller
     (
         BuildConfig buildConfig, 
         ILogger<BuildController> logger, 
-        IShellRunner shellRunner
+        IShellRunner shellRunner,
+        IProcessRunnerFactory processRunnerFactory
     ) 
     : IController
     {
@@ -27,22 +25,35 @@ namespace Threax.DockerTools.Controller
             var buildTag = buildConfig.GetBuildTag();
             var currentTag = buildConfig.GetCurrentTag();
 
-            List<FormattableString> command = new List<FormattableString>() { $"docker build {context} -f {dockerFile} -t {image}:{buildTag} -t {image}:{currentTag} --progress=plain" };
+            var processStartInfo = new ProcessStartInfo("docker")
+            {
+                UseShellExecute = false,
+                ArgumentList =
+                {
+                    "build", context,
+                    "-f", dockerFile,
+                    "-t", $"{image}:{buildTag}",
+                    "-t", $"{image}:{currentTag}",
+                    "--progress=plain"
+                }
+            };
 
             if (buildConfig.PullAllImages)
             {
-                command.Add($" --pull");
+                processStartInfo.ArgumentList.Add("--pull");
             }
 
             if(buildConfig.Args != null)
             {
                 foreach(var arg in buildConfig.Args)
                 {
-                    command.Add($" --build-arg {arg.Key}={arg.Value}");
+                    processStartInfo.ArgumentList.Add("--build-arg");
+                    processStartInfo.ArgumentList.Add($"{arg.Key}={arg.Value}");
                 }
             }
 
-            shellRunner.RunProcessVoid(command, invalidExitCodeMessage: "An error occured during the docker build.");
+            var processRunner = processRunnerFactory.Create();
+            processRunner.Run(processStartInfo);
 
             return Task.CompletedTask;
         }

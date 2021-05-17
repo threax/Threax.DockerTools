@@ -7,40 +7,28 @@ using System.Threading.Tasks;
 using Threax.ConsoleApp;
 using Threax.DeployConfig;
 using Threax.DockerTools.Tasks;
-using Threax.Pipelines.Core;
+using Threax.ProcessHelper;
 
 namespace Threax.DockerTools.Controller
 {
-    class BackupController : IController
+    record BackupController
+    (
+        DeploymentConfig deploymentConfig,
+        ILogger<RunController> logger,
+        IProcessRunnerFactory processRunnerFactory,
+        IRunTask runTask,
+        IArgsProvider argsProvider,
+        IStopContainerTask stopContainerTask
+    )
+    : IController
     {
-        private readonly DeploymentConfig deploymentConfig;
-        private ILogger logger;
-        private IProcessRunner processRunner;
-        private readonly IRunTask runTask;
-        private readonly IArgsProvider argsProvider;
-        private readonly IStopContainerTask stopContainerTask;
-
-        public BackupController(
-            DeploymentConfig deploymentConfig,
-            ILogger<RunController> logger,
-            IProcessRunner processRunner,
-            IRunTask runTask,
-            IArgsProvider argsProvider,
-            IStopContainerTask stopContainerTask)
-        {
-            this.deploymentConfig = deploymentConfig;
-            this.logger = logger;
-            this.processRunner = processRunner;
-            this.runTask = runTask;
-            this.argsProvider = argsProvider;
-            this.stopContainerTask = stopContainerTask;
-        }
 
         public Task Run()
         {
             int exitCode;
             var args = argsProvider.Args;
             var restart = !args.Contains("norestart");
+            var processRunner = processRunnerFactory.Create();
 
             try
             {
@@ -76,10 +64,8 @@ namespace Threax.DockerTools.Controller
                 logger.LogInformation($"Backing up data folder '{fullDataPath}' to '{backupPath}'");
                 stopContainerTask.StopContainer(deploymentConfig.Name);
 
-                exitCode = processRunner.RunProcessWithOutput(new ProcessStartInfo("tar", $"cvpzf {backupPath} {dataFolder}")
-                {
-                    WorkingDirectory = dataParentPath
-                });
+                var startInfo = new ProcessStartInfo("tar") { ArgumentList = { "cvpzf", backupPath, dataFolder }, WorkingDirectory = dataParentPath, UseShellExecute = false };
+                exitCode = processRunner.Run(startInfo);
 
                 if (exitCode != 0)
                 {
