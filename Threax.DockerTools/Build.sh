@@ -16,4 +16,4 @@ mkdir "$destDir"
 rm -rf "$destDir/*"
 
 DOCKER_BUILDKIT=1 docker build --build-arg TARGET=$target "$scriptPath/.." -f "$scriptPath/Dockerfile" -t threax-docker-tools-builder --progress=plain
-docker run -it --rm -v "${destDir}:/out" threax-docker-tools-builder
+docker run --rm -v "${destDir}:/out" threax-docker-tools-builder

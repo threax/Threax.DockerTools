@@ -1,4 +1,3 @@
-# syntax = docker/dockerfile:1.0-experimental
 FROM mcr.microsoft.com/dotnet/runtime:5.0 AS base
 
 WORKDIR /app

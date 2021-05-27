@@ -19,4 +19,4 @@ Remove-Item -Recurse "$destDir/*" -ErrorAction 'SilentlyContinue' # Have to call
 
 # Build the image then extract the tool from it by running it.
 docker build --build-arg TARGET=$target "$scriptPath/.." -f "$scriptPath/Dockerfile" -t threax-docker-tools-builder --progress=plain
-docker run -it --rm -v "${destDir}:/out" threax-docker-tools-builder
+docker run --rm -v "${destDir}:/out" threax-docker-tools-builder
