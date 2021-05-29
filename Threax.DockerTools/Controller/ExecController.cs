@@ -27,6 +27,7 @@ namespace Threax.DockerTools.Controller
             //TODO: This controller is not really safe. Shell commands could be injected here since the formatted strings are not passed as arguments.
             //In practice this is ok, but this is a potential source of issues.
 
+            var destPrefix = Guid.NewGuid().ToString();
             var filesToRemove = new List<String>();
             try
             {
@@ -49,7 +50,7 @@ namespace Threax.DockerTools.Controller
                     if (currentArg == "--exec-load")
                     {
                         var type = args.Length > ++i ? args[i] : throw new InvalidOperationException($"You must include a type argument in position {i}.");
-                        var dest = args.Length > ++i ? args[i] : throw new InvalidOperationException($"You must include a destination argument in position {i}.");
+                        var dest = args.Length > ++i ? destPrefix + args[i] : throw new InvalidOperationException($"You must include a destination argument in position {i}.");
                         var source = args.Length > ++i ? args[i] : throw new InvalidOperationException($"You must include a source argument in position {i}.");
 
                         var result = await loadTask.LoadItem(type, dest, source, () => args.Length > ++i ? args[i] : throw new InvalidOperationException($"You must include a secret name argument in position {i}."));
