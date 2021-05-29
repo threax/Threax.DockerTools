@@ -85,7 +85,7 @@ namespace Threax.DockerTools.Controller
                 var exitCode = processRunner.Run(new System.Diagnostics.ProcessStartInfo("docker", execArgs));
                 if (exitCode != 0)
                 {
-                    throw new InvalidOperationException($"An error occured running the command '{commandName}' on '{containerName}'");
+                    throw new InvalidOperationException($"An error occured running the command '{commandName}' on '{containerName}'. Exit code '{exitCode}'");
                 }
             }
             finally
