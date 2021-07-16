@@ -36,6 +36,8 @@ namespace Threax.DockerTools.Controller
                 }
             };
 
+            processStartInfo.EnvironmentVariables.Add("DOCKER_BUILDKIT", "1");
+
             if (buildConfig.PullAllImages)
             {
                 processStartInfo.ArgumentList.Add("--pull");
